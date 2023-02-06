@@ -19,61 +19,47 @@ syp.pipiens = subset(sypools,sypools$species == 'Culex pipiens')
 syp.tarsalis = data.table(syp.tarsalis)
 syp.pipiens = data.table(syp.pipiens)
 
+    
+# syp.tarsalis.group = syp.tarsalis[,
+#                                       .(tars_mosquitoes_tested = sum(size_of_pools),
+#                                         tars_pools_tested = sum(number_of_pools),
+#                                         tars_pools_tested_positive = sum(number_positive_pools),
+#                                         tars_prev = case_when(
+#                                           sum(number_positive_pools) == sum(number_of_pools) ~ sum(number_positive_pools)/sum(size_of_pools),
+#                                           sum(number_positive_pools) == 0 ~ 0,
+#                                           TRUE ~ pooledBin(x=number_positive_pools,m=size_of_pools,n=number_of_pools,pt.method='mir')$p)),
+#                                       by=list(calculated_subcounty,study_week)]
 
-syp.tarsalis.group = syp.tarsalis [,.(tars_mosquitoes_tested = sum(size_of_pools),
-                                               tars_pools_tested = sum(number_of_pools),
-                                               tars_pools_tested_positive = sum(number_positive_pools)),
-                                     by=list(calculated_subcounty,study_week)]
-mutate(syp.tarsalis.group,
-       tars_prev = 
-         ifelse(sum(syp.tarsalis.group$number_positive_pools) == sum(syp.tarsalis.group$number_of_pools),
-                sum(syp.tarsalis.group$number_positive_pools)/sum(syp.tarsalis.group$size_of_pools),
-                ifelse(sum(syp.tarsalis.group$number_positive_pools) == 0,
-                       0,
-                       pooledBin(x=syp.tarsalis.group$number_positive_pools,
-                                 m=syp.tarsalis.group$size_of_pools,
-                                 n=syp.tarsalis.group$number_of_pools,
-                                 pt.method='mir')$p)))
+# syp.tarsalis.group <- syp.tarsalis%>%
+#   group_by (calculated_subcounty,study_week) %>%
+#   summarise(tars_mosquitoes_tested = sum(size_of_pools),
+#             tars_pools_tested_positive = sum(number_positive_pools)) %>%
+#   mutate(tars_prev = case_when(
+#     sum(number_positive_pools) == sum(number_of_pools) ~ sum(number_positive_pools)/sum(size_of_pools),
+#     sum(number_positive_pools) == 0 ~ 0,
+#     TRUE ~ pooledBin(x=number_positive_pools,m=size_of_pools,n=number_of_pools,pt.method='mir')$p))
+            
+syp.tarsalis.group = syp.tarsalis[,
+                                  .(tars_mosquitoes_tested = sum(size_of_pools),
+                                    tars_pools_tested = sum(number_of_pools),
+                                    tars_pools_tested_positive = sum(number_positive_pools),
+                                    tars_prev = ifelse(sum(number_positive_pools) == sum(number_of_pools),
+                                                       sum(number_positive_pools)/sum(size_of_pools),
+                                                       ifelse(sum(number_positive_pools) == 0,
+                                                              0,
+                                                              pooledBin(x=number_positive_pools,m=size_of_pools,n=number_of_pools,pt.method='mir')$p))),
+                                  by=list(calculated_subcounty,study_week)]
 
-# alternative code for the two last codes above (for some reason this code works for some people but not for others):
-#   syp.tarsalis.group = syp.tarsalis[,
-#                                   .(tars_mosquitoes_tested = sum(size_of_pools),
-#                                     tars_pools_tested = sum(number_of_pools),
-#                                     tars_pools_tested_positive = sum(number_positive_pools),
-#                                     tars_prev = ifelse(sum(number_positive_pools) == sum(number_of_pools),
-#                                                        sum(number_positive_pools)/sum(size_of_pools),
-#                                                        ifelse(sum(number_positive_pools) == 0,
-#                                                               0,
-#                                                               pooledBin(x=number_positive_pools,m=size_of_pools,n=number_of_pools,pt.method='mir')$p))),
-#                                   by=list(calculated_subcounty,study_week)]
-      
       
 syp.pipiens.group = syp.pipiens [,.(pipi_mosquitoes_tested = sum(size_of_pools),
-                                      pipi_pools_tested = sum(number_of_pools),
-                                      pipi_pools_tested_positive = sum(number_positive_pools)),
-                                   by=list(calculated_subcounty,study_week)]
-mutate(syp.pipiens.group,
-       pipi_prev = 
-         ifelse(sum(syp.pipiens.group$number_positive_pools) == sum(syp.pipiens.group$number_of_pools),
-                sum(syp.pipiens.group$number_positive_pools)/sum(syp.pipiens.group$size_of_pools),
-                ifelse(sum(syp.pipiens.group$number_positive_pools) == 0,
-                       0,
-                       pooledBin(x=syp.pipiens.group$number_positive_pools,
-                                 m=syp.pipiens.group$size_of_pools,
-                                 n=syp.pipiens.group$number_of_pools,
-                                 pt.method='mir')$p)))      
-      
-
-# syp.pipiens.group = syp.pipiens[,
-#                                 .(pipi_mosquitoes_tested = sum(size_of_pools),
-#                                   pipi_pools_tested = sum(number_of_pools),
-#                                   pipi_pools_tested_positive = sum(number_positive_pools),
-#                                   pipi_prev = ifelse(sum(number_positive_pools) == sum(number_of_pools),
-#                                                      sum(number_positive_pools)/sum(size_of_pools),
-#                                                      ifelse(sum(number_positive_pools) == 0,
-#                                                             0,
-#                                                             pooledBin(x=number_positive_pools,m=size_of_pools,n=number_of_pools,pt.method='mir')$p))),
-#                                 by=list(calculated_subcounty,study_week)]
+                                    pipi_pools_tested = sum(number_of_pools),
+                                    pipi_pools_tested_positive = sum(number_positive_pools),
+                                    pipi_prev = ifelse(sum(number_positive_pools) == sum(number_of_pools),
+                                                       sum(number_positive_pools)/sum(size_of_pools),
+                                                       ifelse(sum(number_positive_pools) == 0,
+                                                              0,
+                                                              pooledBin(x=number_positive_pools,m=size_of_pools,n=number_of_pools,pt.method='mir')$p))),
+                                 by=list(calculated_subcounty,study_week)]
 
 
 # Abundance
