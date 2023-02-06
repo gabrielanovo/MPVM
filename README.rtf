@@ -1,0 +1,179 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2707
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fnil\fcharset0 LucidaGrande;
+\f3\fswiss\fcharset0 Helvetica-Oblique;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue10;\red38\green38\blue38;
+\red241\green246\blue247;}
+{\*\expandedcolortbl;;\csgray\c0\c0;\cssrgb\c99942\c98555\c0;\cssrgb\c20000\c20000\c20000;
+\cssrgb\c95686\c97255\c97647;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\margl1440\margr1440\vieww28600\viewh14720\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 \
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls1\ilvl0\cf0 \cb2 {\listtext	\uc0\u8226 	}\cb3 code_files_to_run_in_order.R
+\f1\b0 \cb1 \
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls1\ilvl0
+\f0\b \cf0 {\listtext	\uc0\u8226 	}\'91dataset_name\'92
+\f1\b0 \
+\ls1\ilvl0{\listtext	\uc0\u8226 	}\'91\ul variable_name\ulnone \'92\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+
+\fs28 1- 
+\f0\b \cb3 data_organization_mosquito_collection.R
+\f1\b0 \cb1 \
+
+\fs24 	- read in the following 3 mosquito collection datasets \
+		. \'91
+\f0\b sacyolo_mosquito_collections_2006to2011.csv
+\f1\b0 \'92\
+			. 47,350 observations\
+			. 274 variables\
+		. \'91
+\f0\b sacyolo_mosquito_collections_2012to2017.csv
+\f1\b0 \'92\
+			. 132,511 observations\
+			. 316 variables\
+		. \'91
+\f0\b sacyolo_mosquito_collections_2018to2021.csv
+\f1\b0 \'92\
+			. 30,740 observations\
+			. 465 variables\
+	- merge the 3 datasets\
+	- create \'91year\'92, \'91month\'92 and week\'92 variables\
+	- ignore the 53rd week of leap years\
+	- create the \'91study_week\'92 variable\
+	- overall
+\f0\b  
+\f1\b0 dataset created in this code is called \'91
+\f0\b sacyolo_mosquito_collections_2006to2021
+\f1\b0 \'92\
+		. 132,511 observations\
+		. 58 total variables
+\f2\fs22 \cf4 \cb5 \expnd0\expndtw0\kerning0
+\
+	- 
+\f1\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 group the data by date (\'91\ul year\ulnone \'92 and \'91\ul week\ulnone ) and location (\'91\ul calculated_subcounty\ulnone \'92)\
+	- final \cb2 R \cb1 dataset with the grouped data is called \'91
+\f0\b collection_data_epiweek
+\f1\b0 \'92\
+		. 10,110 observations\
+		. 7 variables\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs28 \cf0 2- 
+\f0\b \cb3 data_organization_temperature.R
+\f1\b0 \cb1 \
+
+\fs24 	- reads in the following temperature dataset\
+		. 
+\f0\b temperature_data_by_county_subdivision
+\f1\b0 \
+			. 198,628 observations\
+			. 18 variables\
+	- create \'91\ul year\ulnone \'92, \'91\ul month\ulnone \'92 and \ul week\ulnone \'92 variables
+\f2\fs22 \cf4 \cb5 \expnd0\expndtw0\kerning0
+\
+	- 
+\f1\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 merge the data by date (\'91\ul year\ulnone \'92 and \'91\ul week\ulnone ) and location (\'91\ul calculated_subcounty\ulnone \'92)\
+	- final R
+\f0\b  
+\f1\b0 dataset of this code is called \'91
+\f0\b temperature_data_epiweek
+\f1\b0 \'92\
+		. 28,832 observations\
+		. 6 variables\
+\
+
+\fs28 3- 
+\f0\b \cb3 data_organization_abundance.R
+\f1\b0 \cb1  
+\fs24 (abundance dataset = collection dataset + temperature dataset)\
+	- read in the 2 codes above \
+	- merge the \'91
+\f0\b collection_data_epiweek
+\f1\b0 \'92 and \'91
+\f0\b temperature_data_epiweek
+\f1\b0 \'92 datasets by date (\'91\ul week\ulnone \'92 and \'91\ul year\ulnone \'92) and location (\'91\ul calculated_subcounty\ulnone \'92)\
+	- create a function to obtain the \'91\ul date\ulnone \'92 variable that we lost in the merging process\
+	- apply the function to the data\
+	- recreate \'91\ul study_week\ulnone \'92 and \'91\ul month\ulnone \'92 variables based on our new \'91\ul date\ulnone \'92 variable\
+	- reorder the columns and sort the data by \'91\ul calculated_subcounty\ulnone \'92 and \ul study_week\ulnone \'92\
+	- final R dataset from this code is called \'91
+\f0\b collection_temperature_epiweek
+\f1\b0 \'92\
+		. 9,301 observations\
+		. 14 variables\
+	- export the data as \'91
+\f0\b syabund.rds
+\f1\b0 \'92\
+\
+
+\fs28 4- 
+\f0\b \cb3 data_organization_pools.R
+\f1\b0\fs24 \cb1 \
+	. read in the following dataset\
+		. \'91\ul sac-yolo_mosquito_pool_test_result\ulnone \'92\
+			. 327,719 observations\
+			. 32 variables\
+	- create \'91\ul year\ulnone \'92, \'91\ul month\ulnone \'92 and \ul week\ulnone \'92 variables\
+	- ignore the 53rd week of leap years\
+	- create the \'91\ul study_week\ulnone \'92 variable\
+	- restrict the dataset for pools targeting WNV only, and including only female
+\f3\i  C. pipiens 
+\f1\i0 and 
+\f3\i C. tarsalis\
+	- 
+\f1\i0 code positive pools as 1 and negative as 0
+\f3\i \
+	- 
+\f1\i0 arrange the data by \'91\ul calculated_subcounty\ulnone \'92 and \'91\ul study_week\ulnone \'92\
+	- final R dataset from this code is called \'91
+\f0\b sy_pools_wnv
+\f1\b0 \'92\
+		. 101,729 observations\
+		. 11 variables\
+	- export the data as \'91
+\f0\b sypools.rds
+\f1\b0 \'92\
+\
+\
+
+\fs28 5- 
+\f0\b \cb3 data_organization_final_dataset.R
+\fs24 \cb2  
+\f1\b0 \cb1 (final dataset = abundance dataset + pools dataset)\
+	. read in the following datasets:\
+		. \'92
+\f0\b syabund
+\f1\b0 \'92\
+		. \'91
+\f0\b sypools
+\f1\b0 \'92\
+	. subset the data by species (C. tarsalis or C. pipiens)\
+	. group each subset by \'91\ul calculated_subcounty\ulnone \'92 and \'91\ul study_week\ulnone \'92\
+	. create a new variable for infection prevalence (\'91\ul pipi_prev\ulnone \'92 and \'91\ul tars_prev\ulnone \'92)\
+	. merge the abundance dataset with both subsets \
+	. calculate average values for min, mean and max temperatures by subcounty by week\
+	. calculate values for temperature deviation and deviation in standard deviation by subcounty by week\
+	. create a variable called \'91\ul temp_peak\ulnone \'92 , which will be 1 in case any of the deviations-in-sd is greater than 1, and 0 otherwise\
+	. final R dataset from this code is called \'91
+\f0\b mydata
+\f1\b0 \'92\
+		. 13,336 observations\
+		. 33 variables\
+	. export the data as \'91
+\f0\b mydata.rds
+\f1\b0 \'92\
+		\
+\
+\
+\
+}
