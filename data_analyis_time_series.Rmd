@@ -1,0 +1,98 @@
+---
+title: "Data Analysis - Time Series"
+author: "Gabriela Novo de Oliveira"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    theme: flatly
+    highlight: tango
+    toc: yes
+    toc_depth: 4
+    depth: 2
+    number_sections: no
+    toc_float:
+      collapsed: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+---
+
+```{r}
+library(data.table)
+library(plyr)
+library(dplyr)
+library(tidyverse)
+library(ggthemes)
+```
+
+```{r}
+mydata = readRDS('~/Downloads/DART/Project/Data/mydata.rds')
+```
+
+## Sacramento
+
+```{r}
+sacramento_dataset <- mydata %>%
+  filter(calculated_subcounty=='Sacramento',
+         year!=0)
+
+sacramento_dataset <- as.data.table(sacramento_dataset)
+```
+
+### 🦟 Culex tarsalis
+
+```{r}
+#plotting to start looking at trends 
+ggplot(sacramento_dataset,aes(x=study_week,y = tars_trapnight)) +
+  geom_bar(stat="identity", width = 0.5, colour = "black") + 
+  geom_smooth(aes(y = tars_trapnight), method=NULL, level=0.95) + 
+  theme_minimal() + 
+  xlab("Time aggregated by study_week") + 
+  ylab("Tarsalis per trap-night")
+```
+
+Converting the data to an R recognised time-series
+
+```{r}
+# weekly time series
+sacramento_tarsalis_ts <-
+ts(sacramento_dataset$tars_trapnight,frequency = 52, start= c(2006,1,1))
+```
+
+```{r}
+# Decomposition of time series
+decompose_sacramento_tarsalis_ts <- decompose(sacramento_tarsalis_ts)
+summary(decompose_sacramento_tarsalis_ts)
+```
+
+```{r}
+plot(decompose_sacramento_tarsalis_ts)
+```
+
+```{r}
+# STL (loess)
+decompose_sacramento_tarsalis_ts_loess <- stl(sacramento_tarsalis_ts,
+s.window="periodic") 
+
+plot(decompose_sacramento_tarsalis_ts_loess)
+```
+
+
+```{r}
+ggplot(sacramento_dataset, aes(y=tars_trapnight, x = week)) +
+  geom_boxplot(aes(group=week), fill = 'grey90') + 
+  theme_minimal()
+```
+
+```{r}
+ggplot(sacramento_dataset, aes(y=tars_trapnight, x = month)) +
+  geom_boxplot(aes(group=month), fill = 'grey90') +
+  theme_minimal()
+```
+
+```{r}
+ggplot(sacramento_dataset, aes(y=tars_trapnight, x = year)) +
+  geom_boxplot(aes(group=year), fill = 'grey90') +
+  theme_minimal()
+```
+
