@@ -85,7 +85,7 @@ Read the 5 organization.R codes in the following order to obtain the final datas
 - create a variable called `temp_peak` , which will be 1 in case any of the deviations-in-sd is greater than 1, and 0 otherwise
 - final R dataset from this code is called `mydata`
   - 13,336 observations
-  - 33 variables
+  - 35 variables
 - export the data as **mydata.rds**
 		
 
