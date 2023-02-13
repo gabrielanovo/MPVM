@@ -6,7 +6,7 @@ Read the 5 organization.R codes in the following order to obtain the final datas
 
 ### 1.1. data_organization_mosquito_collection.R
 
-- read in the following 3 mosquito collection datasets
+- read in the following 3 mosquito collection datasets (compressed as **sacyolo_mosquito_collections_datasets.zip**)
   - **sacyolo_mosquito_collections_2006to2011.csv**
     - 47,350 observations
     - 274 variables
